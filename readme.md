@@ -31,7 +31,7 @@
 
 
 ## Run Images in containers
-  #### dentro do docker-compose, iremos subir a imagem do kafka e do zookeper para trabalharmos com o conceito de filas.
+  #### dentro do docker-compose, iremos subir a imagem do redis, kafka e do zookeper para trabalharmos com o conceito de filas.
   - docker-compose up --build
 
 ##### ps: verifique se as portas utilizadas neste exemplos já estão sendo utilizadas por outra aplicação em seu computador.
