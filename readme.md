@@ -1,5 +1,6 @@
 # Projeto Gerenciador de Produtos
 
+![alt text](https://github.com/dgmodesto/mangager_products/blob/main/Arquitetura.JPG?raw=true)
   
 ## Grafana and Prometheus
 
