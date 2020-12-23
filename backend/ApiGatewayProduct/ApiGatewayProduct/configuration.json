@@ -1,0 +1,32 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/register/api/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "SwaggerKey": "registerproduct"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "registerproduct",
+      "Config": [
+        {
+          "Name": "Register Product",
+          "Version": "v1",
+          "Url": "https://localhost:5001/swagger/v1/swagger.json"
+
+        }
+      ]
+    }
+  ],
+
+  "GlobalConfiguration": {}
+}

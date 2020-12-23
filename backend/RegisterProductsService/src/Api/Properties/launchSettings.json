@@ -1,0 +1,46 @@
+﻿{
+  "iisSettings": {
+    "windowsAuthentication": true,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:5000",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+
+        "applicationUrl": "https://localhost:5001;http://localhost:5000",
+        "ASPNETCORE_ENVIRONMENT": "Development", //ambiente - Local, Development, Staging e Production
+
+        "KAFKA_GROUP_ID": "PRODUCT-CONSUMER-GROUP",
+        "KAFKA_SERVER": "localhost:9092",
+        "KAFKA_TOPIC": "PRODUCT-TOPIC",
+
+        "MYSQL_CONNECTION_STRING": "server=products-db.cpkayivoztp6.sa-east-1.rds.amazonaws.com;user=admin;password=a1b2c3d4e5;database=ProductTestDb",
+        "REDIS_CONNECTION": "localhost, port:6379, password=Redis2020"
+      }
+    },
+    "Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+
+        "applicationUrl": "https://localhost:5001;http://localhost:5000",
+        "ASPNETCORE_ENVIRONMENT": "Development", //ambiente - Local, Development, Staging e Production
+
+        "KAFKA_GROUP_ID": "PRODUCT-CONSUMER-GROUP",
+        "KAFKA_SERVER": "localhost:9092",
+        "KAFKA_TOPIC": "PRODUCT-TOPIC",
+
+        "MYSQL_CONNECTION_STRING": "server=products-db.cpkayivoztp6.sa-east-1.rds.amazonaws.com;user=admin;password=a1b2c3d4e5;database=ProductTestDb",
+        "REDIS_CONNECTION": "localhost, port:6379, password=Redis2020"
+      }
+    }
+  }
+}

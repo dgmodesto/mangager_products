@@ -1,0 +1,14 @@
+version: "2"
+services:
+  grafana:
+    image: register-product-grafana
+    restart: always
+    ports:
+      - 3001:3000
+  prometheus:
+    image: register-product-prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./Qa/prometheus/data/prometheus:/data

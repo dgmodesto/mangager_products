@@ -1,0 +1,127 @@
+version: "2"
+services:
+  redis:
+    image: redis
+    networks:
+      - net
+    command: redis-server --requirepass Redis2020
+    ports:
+      - "6379:6379"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    networks:
+      - net
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    networks:
+      - net
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    networks:
+      - net
+    volumes:
+      - "./esdata:/usr/share/elasticsearch/data"
+    container_name: register-products-elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+
+  Kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.1
+    networks:
+      - net
+    container_name: register-products-kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+  register-product-service:
+    image: register-product-service
+    build:
+      context: .
+      dockerfile: backend/RegisterProductsService/src/Api/Dockerfile
+    networks:
+      - net
+    ports:
+      - "5001:5001"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dotnet Api.dll
+
+  register-product-consumer:
+    image: register-product-consumer
+    build:
+      context: .
+      dockerfile: backend/RegisterProductsConsumer/src/Consumer/Dockerfile
+    networks:
+      - net
+    ports:
+      - "5000:5000"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dotnet Consumer.dll
+
+  register-product-api-gateway:
+    image: register-product-api-gateway
+    build:
+      context: .
+      dockerfile: backend/ApiGatewayProduct/ApiGatewayProduct/Dockerfile
+    networks:
+      - net
+    ports:
+      - "5555:5555"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dotnet ApiGatewayProduct.dll
+
+  product-frontend:
+    image: product-frontend
+    networks:
+      - net
+    environment:
+      - NGINX_LISTENING_PORT=listen 4200;
+    command:
+      - /bin/sh
+      - -c
+      - |
+        nginx -g "daemon off;"
+    ports:
+      - "4200:4200"
+
+volumes:
+  esdata:
+    driver: local
+
+networks:
+  net:
+    driver: bridge

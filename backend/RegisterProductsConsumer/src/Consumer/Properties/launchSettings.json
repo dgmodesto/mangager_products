@@ -1,0 +1,26 @@
+﻿{
+  "profiles": {
+    "Local": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Local", //ambiente - Local, Development, Staging e Production
+        "applicationUrl": "https://localhost:5001;http://localhost:5000",
+        "KAFKA_GROUP_ID": "PRODUCT-CONSUMER-GROUP",
+        "KAFKA_SERVER": "localhost:9092",
+        "KAFKA_TOPIC": "PRODUCT-TOPIC",
+        "MYSQL_CONNECTION_STRING": "server=products-db.cpkayivoztp6.sa-east-1.rds.amazonaws.com;user=admin;password=a1b2c3d4e5;database=ProductTestDb"
+      }
+    },
+    "PRD": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Release", //ambiente - Local, Development, Staging e Production
+        "applicationUrl": "https://localhost:5001;http://localhost:5000",
+        "KAFKA_GROUP_ID": "PRODUCT-CONSUMER-GROUP",
+        "KAFKA_SERVER": "localhost:9092",
+        "KAFKA_TOPIC": "PRODUCT-TOPIC",
+        "MYSQL_CONNECTION_STRING": "server=products-db.cpkayivoztp6.sa-east-1.rds.amazonaws.com;user=admin;password=a1b2c3d4e5;database=ProductTestDb"
+      }
+    }
+  }
+}
