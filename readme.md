@@ -1,37 +1,44 @@
-# Projeto Gerenciador de Produtos
+# Product Manager
 
-![alt text](https://github.com/dgmodesto/mangager_products/blob/main/Arquitetura.JPG?raw=true)
-  
+A distributed-applications lab: .NET Core backend, Angular frontend, Kafka queues, and Prometheus/Grafana metrics, all running in containers to simulate a production environment.
+
+![Architecture](https://github.com/dgmodesto/mangager_products/blob/main/Arquitetura.JPG?raw=true)
+
 ## Grafana and Prometheus
 
-#### Create a image for prometheus
-  - docker build -t register-product-prometheus --no-cache -f prometheus.qa.Dockerfile .
+```bash
+# Prometheus image
+docker build -t register-product-prometheus --no-cache -f prometheus.qa.Dockerfile .
 
-#### Create a image for grafana
-  - docker build -t register-product-grafana --no-cache -f grafana.qa.Dockerfile .
-
+# Grafana image
+docker build -t register-product-grafana --no-cache -f grafana.qa.Dockerfile .
+```
 
 ## Microservices
 
-#### Create a image for register product api gateway
-  - docker build -t register-product-api-gateway --no-cache -f ./ApiGatewayProduct/Dockerfile .
+```bash
+# API gateway
+docker build -t register-product-api-gateway --no-cache -f ./ApiGatewayProduct/Dockerfile .
 
+# Register product service
+docker build -t register-product-service --no-cache -f ./src/Api/Dockerfile .
 
-#### Create a image for register product service
-  - docker build -t register-product-service --no-cache -f ./src/Api/Dockerfile .
-
-#### Create a image for register product consumer
-  - docker build -t register-product-consumer --no-cache -f ./src/Consumer/Dockerfile .
+# Register product consumer
+docker build -t register-product-consumer --no-cache -f ./src/Consumer/Dockerfile .
+```
 
 ## Frontend
 
-#### Create a image for product frontend
-  - docker build -t product-frontend --no-cache .
+```bash
+docker build -t product-frontend --no-cache .
+```
 
+## Running the containers
 
+`docker-compose` also starts Redis, Kafka and ZooKeeper, so the queue-based concepts can be exercised.
 
-## Run Images in containers
-  #### dentro do docker-compose, iremos subir a imagem do redis, kafka e do zookeper para trabalharmos com o conceito de filas.
-  - docker-compose up --build
+```bash
+docker-compose up --build
+```
 
-##### ps: verifique se as portas utilizadas neste exemplos já estão sendo utilizadas por outra aplicação em seu computador.
+> Note: make sure the ports used in this example are not already in use by another application on your machine.
